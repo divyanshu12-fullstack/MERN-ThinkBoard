@@ -30,7 +30,7 @@ const Navbar = () => {
 
           <div className="flex items-center gap-4">
             <Link
-              to="/create"
+              to={"/create"}
               className="relative group btn btn-primary btn-sm sm:btn-md 
                          transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 
                          hover:scale-105 flex items-center gap-2

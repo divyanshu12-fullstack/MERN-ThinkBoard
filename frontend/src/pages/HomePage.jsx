@@ -4,6 +4,7 @@ import RateLimitedUI from "../components/RateLimitedUI";
 import axios from "axios";
 import toast from "react-hot-toast";
 import NoteCard from "./NoteCard";
+import Footer from "../components/Footer";
 
 const HomePage = () => {
   const [isRateLimited, setIsRateLimited] = useState(false);
@@ -33,22 +34,22 @@ const HomePage = () => {
 
   return (
     <div className="relative min-h-screen">
-      {/* Background gradient */}
       <div className="fixed inset-0 -z-10 h-full w-full">
         <div className="absolute inset-0 bg-gradient-radial" />
 
-        {/* Additional subtle patterns */}
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-0 left-0 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute inset-0 opacity-40">
+          <div className="absolute top-0 left-0 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-pulse" />
           <div
-            className="absolute bottom-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse"
+            className="absolute bottom-0 right-0 w-96 h-96 bg-primary/15 rounded-full blur-3xl animate-pulse"
             style={{ animationDelay: "1s" }}
           />
           <div
-            className="absolute top-1/2 left-1/3 w-64 h-64 bg-primary/8 rounded-full blur-3xl animate-pulse"
+            className="absolute top-1/2 left-1/3 w-64 h-64 bg-primary/18 rounded-full blur-3xl animate-pulse"
             style={{ animationDelay: "0.5s" }}
           />
         </div>
+
+        <div className="absolute inset-0 opacity-[0.02] bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.8)_1px,transparent_0)] bg-[size:50px_50px]" />
       </div>
 
       <Navbar />
@@ -63,35 +64,33 @@ const HomePage = () => {
         {loading && (
           <div className="flex flex-col items-center justify-center py-20">
             <div className="relative">
-              <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary/30 border-t-primary"></div>
+              <div className="animate-spin rounded-full h-16 w-16 border-4 border-primary/30 border-t-primary shadow-glow"></div>
               <div
-                className="absolute inset-0 rounded-full h-12 w-12 border-4 border-transparent border-t-primary/50 animate-spin"
+                className="absolute inset-0 rounded-full h-16 w-16 border-4 border-transparent border-t-primary/70 animate-spin"
                 style={{
                   animationDuration: "1.5s",
                   animationDirection: "reverse",
                 }}
               ></div>
             </div>
-            <p className="text-primary mt-4 font-medium animate-pulse">
+            <p className="text-primary mt-6 font-semibold text-lg animate-pulse">
               Loading Notes...
             </p>
           </div>
         )}
 
         {notes.length > 0 && !isRateLimited && (
-          <div className="space-y-6">
-            {/* Header section */}
-            <div className="text-center mb-8">
-              <h1 className="text-4xl font-bold text-base-content mb-2 bg-gradient-to-r from-primary via-base-content to-primary bg-clip-text text-transparent">
+          <div className="space-y-8">
+            <div className="text-center mb-12">
+              <h1 className="text-5xl font-bold text-base-content mb-4 bg-gradient-to-r from-primary via-base-content to-primary bg-clip-text text-transparent drop-shadow-lg">
                 Your Notes
               </h1>
-              <p className="text-base-content/70 text-lg">
+              <div className="w-24 h-1 bg-gradient-to-r from-primary/60 via-primary to-primary/60 rounded-full mx-auto mb-4"></div>
+              <p className="text-base-content/80 text-xl font-medium">
                 {notes.length} {notes.length === 1 ? "note" : "notes"} found
               </p>
             </div>
-
-            {/* Notes grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
               {notes.map((note, index) => (
                 <div
                   key={note._id}
@@ -101,7 +100,7 @@ const HomePage = () => {
                     opacity: 0,
                   }}
                 >
-                  <NoteCard note={note} />
+                  <NoteCard note={note} setNotes={setNotes} />
                 </div>
               ))}
             </div>
@@ -109,20 +108,22 @@ const HomePage = () => {
         )}
 
         {notes.length === 0 && !loading && !isRateLimited && (
-          <div className="flex flex-col items-center justify-center py-20">
-            <div className="text-center max-w-md">
-              <div className="text-6xl mb-4 opacity-50">📝</div>
-              <h2 className="text-2xl font-bold text-base-content mb-2">
+          <div className="flex flex-col items-center justify-center py-24">
+            <div className="text-center max-w-lg">
+              <div className="text-8xl mb-6 opacity-60 animate-pulse">📝</div>
+              <h2 className="text-3xl font-bold text-base-content mb-4 drop-shadow-sm">
                 No notes yet
               </h2>
-              <p className="text-base-content/60 mb-6">
-                Start creating your first note to see it here
+              <p className="text-base-content/70 mb-8 text-lg leading-relaxed">
+                Start creating your first note to see it here. Your ideas
+                deserve a beautiful home.
               </p>
-              <div className="w-32 h-1 bg-gradient-to-r from-primary/50 via-primary to-primary/50 rounded-full mx-auto"></div>
+              <div className="w-40 h-2 bg-gradient-to-r from-primary/60 via-primary to-primary/60 rounded-full mx-auto"></div>
             </div>
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 };
